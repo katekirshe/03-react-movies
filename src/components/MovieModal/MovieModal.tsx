@@ -18,20 +18,6 @@ function MovieModal({ onClose, movie }: MovieModalProps) {
     
     useEffect(() => {
 	const handleKeyDown = (e: KeyboardEvent) => {
-	    if (e.key === "Escape") {
-	      onClose();
-	    }
-	  };
-	
-	  document.addEventListener("keydown", handleKeyDown);
-	
-	  return () => {
-	    document.removeEventListener("keydown", handleKeyDown);
-	  };
-    }, [onClose]);
-
-    useEffect(() => {
-	const handleKeyDown = (e: KeyboardEvent) => {
 	  if (e.key === "Escape") {
 	    onClose();
 	  }
@@ -53,7 +39,7 @@ function MovieModal({ onClose, movie }: MovieModalProps) {
                 &times;
                 </button>
                 <img
-                    src={`https://image.tmdb.org/t/p/original${movie.poster_path}`}
+                    src={`https://image.tmdb.org/t/p/original${movie.backdrop_path}`}
                     alt={movie.title}
                     className={css.image}
                 />

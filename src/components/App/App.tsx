@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react"
+import { useState } from "react"
 import { fetchMovies } from "../../services/movieService"
 import css from './App.module.css'
 import SearchBar from "../SearchBar/SearchBar"
@@ -12,13 +12,8 @@ import MovieModal from "../MovieModal/MovieModal"
 function App() {
   const [isLoading, setIsLoading] = useState(false)
   const [isError, setIsError] = useState(false)
-  const [isModalOpen, setIsModalOpen] = useState(false);
   const [movies, setMovies] = useState<Movie[]>([])
   const [selected, setSelected] = useState<Movie | null>(null)
-
-  useEffect(() => {
-    fetchMovies('batman')
-  }, [])
 
   async function onSubmit(title: string) {
     try {
@@ -38,12 +33,12 @@ function App() {
     }
   }
 
-  const openModal = () => setIsModalOpen(true);
-  const closeModal = () => setIsModalOpen(false);
+  const closeModal = () => {
+    setSelected(null)
+  }
 
   function onSelect(movie: Movie) {
     setSelected(movie)
-    openModal()
   }
 
   return <div className={css.app}>
@@ -52,7 +47,7 @@ function App() {
     {movies.length > 0 && <MovieGrid movies={movies} onSelect={onSelect} />}
     {isLoading && <Loader />}
     {isError && <ErrorMessage />}
-    {isModalOpen && selected && <MovieModal onClose={closeModal} movie={selected}/>}
+    {selected && <MovieModal onClose={closeModal} movie={selected}/>}
   </div>
 }
 
